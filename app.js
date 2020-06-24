@@ -1,8 +1,19 @@
 //  Listen for submit
-document.getElementById('loan-form').addEventListener('submit', calculateResults);
+document.getElementById('loan-form').addEventListener('submit', function (e) {
+    // hide Results
+    document.getElementById('results').style.display = 'none';
+
+
+    // Show Loader
+    document.getElementById('loading').style.display = 'block';
+
+    setTimeout(calculateResults, 1300);
+
+    e.preventDefault();
+});
 
 // Calculate Results
-function calculateResults(e) {
+function calculateResults() {
 
 
     // UI Vars
@@ -26,16 +37,21 @@ function calculateResults(e) {
         monthlyPayment.value = monthly.toFixed(2);
         totalPayment.value = (monthly * calculatedPayments).toFixed(2);
         totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+
+        // Show Results Hide Loading
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('loading').style.display = 'none';
     } else {
         showError('Preencha todos os campos');
     }
-
-    e.preventDefault();
-
 }
 
 // Error Message
 function showError(error) {
+
+    // Hide Loading
+    document.getElementById('loading').style.display = 'none';
+
     // create a div
     const errorDiv = document.createElement('div');
 
